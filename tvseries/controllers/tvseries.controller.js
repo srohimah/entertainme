@@ -1,11 +1,11 @@
-const Movies = require ('../models/movies.model')
+const TvSeries = require ('../models/tvseries.model')
 
-  const getAllMovie = async(req, res) => {
+  const getAllTvSeries = async(req, res) => {
     try{
-      const allMovie = await Movies.find()
+      const allTvSeries = await TvSeries.find()
         res.send(200, {
-          info: "movies found successfully",
-          data: allMovie
+          info: "tv found successfully",
+          data: allTvSeries
         })
     } catch(err){
       res.send(500, {
@@ -15,17 +15,17 @@ const Movies = require ('../models/movies.model')
     }
   }
   
-  const addMovie = async(req, res) => {
+  const addTvSeries = async(req, res) => {
     try {
-      const newmovie = await Movies.create({
+      const newTvSeries = await TvSeries.create({
         title: req.body.title,
         overview: req.body.overview,
         poster_path: req.body.poster_path,
         popularity: req.body.popularity,
       })
         res.send(200,{
-          info: "new movie created",
-          data: newmovie
+          info: "new tv created",
+          data: newTvSeries
         })
     } catch (err) {
       res.send(500, {
@@ -35,11 +35,11 @@ const Movies = require ('../models/movies.model')
     }
   }
 
-  const editMovie = async (req, res) => {
+  const editTvSeries = async (req, res) => {
     try {
-      const data = await Movies.findByIdAndUpdate(req.params.id, req.body)
+      const data = await TvSeries.findByIdAndUpdate(req.params.id, req.body)
         res.status(200).send({
-          info: 'Movie has been updated',
+          info: 'tv has been updated',
           data
         })
     } catch (err) {
@@ -50,11 +50,11 @@ const Movies = require ('../models/movies.model')
     }
   }
 
-  const deleteMovie =  async (req,res) => {
+  const deleteTvSeries =  async (req,res) => {
     try {
-      const data = await Movies.findByIdAndRemove(req.params.id) 
+      const data = await TvSeries.findByIdAndRemove(req.params.id) 
       res.status(200).send({
-        info: "movie has been deleted",
+        info: "tv has been deleted",
         data
       })
     } catch (err) {
@@ -65,8 +65,8 @@ const Movies = require ('../models/movies.model')
   }
 
 module.exports = {
-  getAllMovie,
-  addMovie,
-  editMovie,
-  deleteMovie
+  getAllTvSeries,
+  addTvSeries,
+  editTvSeries,
+  deleteTvSeries
 }
