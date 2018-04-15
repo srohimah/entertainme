@@ -6,11 +6,9 @@ var logger = require('morgan');
 const mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 var entertainRouter = require('./routes/entertains');
-
-mongoose.connect('mongodb://localhost/entertain', (err) => {
-  if(!err) {console.log('Connected to Database');}
-  else {throw new Error(err);}
-});
+const movies = require('./routes/movies')
+const cors = require('cors');
+const {checkEntertainmeCache} = require('./middlewares/cache')
 
 var app = express();
 
@@ -23,8 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
+app.use(cors())
+// app.use('/entertainme', checkEntertainmeCache, entertainRouter);
 app.use('/entertainme', entertainRouter);
 
 // catch 404 and forward to error handler

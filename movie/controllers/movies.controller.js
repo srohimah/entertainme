@@ -3,12 +3,12 @@ const Movies = require ('../models/movies.model')
   const getAllMovie = async(req, res) => {
     try{
       const allMovie = await Movies.find()
-        res.send(200, {
+        res.status(200).json({
           info: "movies found successfully",
           data: allMovie
         })
     } catch(err){
-      res.send(500, {
+      res.status(500).json( {
         info: "Something Went Wrong",
         error: err
       })
@@ -23,12 +23,12 @@ const Movies = require ('../models/movies.model')
         poster_path: req.body.poster_path,
         popularity: req.body.popularity,
       })
-        res.send(200,{
+        res.status(200).json({
           info: "new movie created",
           data: newmovie
         })
     } catch (err) {
-      res.send(500, {
+      res.status(500).json( {
         info: "Something Went Wrong",
         error: err
       })
@@ -38,12 +38,12 @@ const Movies = require ('../models/movies.model')
   const editMovie = async (req, res) => {
     try {
       const data = await Movies.findByIdAndUpdate(req.params.id, req.body)
-        res.status(200).send({
+        res.status(200).json({
           info: 'Movie has been updated',
           data
         })
     } catch (err) {
-      res.status(500).send({
+      res.status(500).json({
         info: "Something Went Wrong",
         error: err
       })
@@ -53,12 +53,12 @@ const Movies = require ('../models/movies.model')
   const deleteMovie =  async (req,res) => {
     try {
       const data = await Movies.findByIdAndRemove(req.params.id) 
-      res.status(200).send({
+      res.status(200).json({
         info: "movie has been deleted",
         data
       })
     } catch (err) {
-      res.status(500).send({
+      res.status(500).json({
         info: err
       })
     } 
