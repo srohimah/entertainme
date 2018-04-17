@@ -1,5 +1,5 @@
 const axios = require('axios')
-movies
+
 const resolvers = {
   Query: {
     movies: async () => {
