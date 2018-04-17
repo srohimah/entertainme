@@ -1,0 +1,38 @@
+type Query {
+  movies: [Movie],
+  tvseries: [TvSeries]
+}
+
+type Mutation {
+  addMovie(input: MovieInput): Movie
+}
+
+type Movie {
+  _id: String
+  title:  String
+  overview: String
+  poster_path: String
+  popularity: String
+  tag: [String]
+  status: String
+}
+
+type TvSeries {
+  _id: String
+  title:  String
+  overview: String
+  poster_path: String
+  popularity: String
+  tag: [String]
+  status: String
+}
+
+input MovieInput {
+  title:  String
+  overview: String
+  poster_path: String
+  popularity: String
+  tag: [String]
+  status: String
+
+}

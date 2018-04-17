@@ -3,13 +3,24 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 var entertainRouter = require('./routes/entertains');
 const movies = require('./routes/movies')
 const cors = require('cors');
-const {checkEntertainmeCache} = require('./middlewares/cache')
+const fs = require('fs')
 
+//graphql
+const {graphqlExpress,graphiqlExpress} = require('apollo-server-express')
+const { makeExecutableSchema } = require('graphql-tools')
+const typeDefs = fs.readFileSync('./grapql/typeDefs/orkestrator.gql', 'utf-8')
+const resolvers = require('./grapql/resolvers/orkestrator.resolver')
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers
+})
+// console.log(schema)
 var app = express();
 
 // view engine setup
@@ -22,8 +33,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
-// app.use('/entertainme', checkEntertainmeCache, entertainRouter);
+
+
 app.use('/entertainme', entertainRouter);
+app.use('/graphql', bodyParser.json(), graphqlExpress({schema}))
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
